@@ -1,4 +1,4 @@
-export default function WeatherForm({ zipCode, setZipCode, units, setUnits }) {
+export default function WeatherForm({ zipCode, setZipCode, units, setUnits, updateWeather }) {
   return(
   <form>
     <input
@@ -10,7 +10,7 @@ export default function WeatherForm({ zipCode, setZipCode, units, setUnits }) {
       <input
         type="radio"
         checked={units === "fahrenheit"}
-        onClick={(e) => setUnits(e.target.value)}
+        onChange={(e) => setUnits(e.target.value)}
         value="fahrenheit"/>
       Fahrenheit
     </label>
@@ -18,7 +18,7 @@ export default function WeatherForm({ zipCode, setZipCode, units, setUnits }) {
       <input
         type="radio"
         checked={units === "celsius"}
-        onClick={(e) => setUnits(e.target.value)}
+        onChange={(e) => setUnits(e.target.value)}
         value="celsius"/>
       Celsius
     </label>
@@ -26,10 +26,14 @@ export default function WeatherForm({ zipCode, setZipCode, units, setUnits }) {
       <input
         type="radio"
         checked={units === "kelvin"}
-        onClick={(e) => setUnits(e.target.value)}
+        onChange={(e) => setUnits(e.target.value)}
         value="kelvin"/>
       Kelvin
     </label>
+    <button onClick={(e) => {
+      e.preventDefault();
+      updateWeather(zipCode)
+      }}>Submit</button>
   </form>
   );
 };
