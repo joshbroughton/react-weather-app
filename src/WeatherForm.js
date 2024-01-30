@@ -1,4 +1,20 @@
-export default function WeatherForm({ zipCode, setZipCode, units, setUnits, updateWeather }) {
+export default function WeatherForm({ zipCode, setZipCode, units, setUnits, setTemperature, setIsError }) {
+  async function updateWeather(zipCode) {
+    let apiString = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${process.env.REACT_APP_API_KEY}`;
+    try {
+      const response = await fetch(apiString);
+      const body = await response.json();
+      if (body.cod === 200) {
+        setIsError(false);
+        setTemperature(body.main.temp);
+      } else {
+        setIsError(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return(
   <form>
     <input

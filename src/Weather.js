@@ -1,21 +1,28 @@
+import { useState, useEffect } from "react";
 import WeatherForm from "./WeatherForm";
-import { useState } from "react";
+import DisplayWeather from "./DisplayWeather";
+
 
 export default function Weather() {
   const [zipCode, setZipCode] = useState("");
   const [units, setUnits] = useState("fahrenheit");
-  const [weather, setWeather] = useState("");
+  const [temperature, setTemperature] = useState("");
+  const [displayTemperature, setDisplayTemperature] = useState("");
+  const [isError, setIsError] = useState(false);
 
-  async function updateWeather(zipCode) {
-    let apiString = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${process.env.REACT_APP_API_KEY}`;
-    try {
-      const response = await fetch(apiString);
-      const body = await response.json();
-      setWeather(body.main.temp);
-    } catch (err) {
-      console.log(err);
+  useEffect(() => {
+    if (temperature === "") {
+      setDisplayTemperature("");
+    } else {
+      if (units === "fahrenheit") {
+        setDisplayTemperature(((parseInt(temperature) - 273.15)*(9 / 5) + 32).toFixed(2));
+      } else if (units === "celsius") {
+        setDisplayTemperature((parseInt(temperature) - 273.15).toFixed(2));
+      } else {
+        setDisplayTemperature((parseInt(temperature)).toFixed(2));
+      }
     }
-  };
+  }, [temperature, units])
 
   return(
     <div>
@@ -25,8 +32,9 @@ export default function Weather() {
         setZipCode={setZipCode}
         units={units}
         setUnits={setUnits}
-        updateWeather={updateWeather} />
-      <h2>{weather}</h2>
+        setTemperature={setTemperature}
+        setIsError={setIsError} />
+      <DisplayWeather displayTemperature={displayTemperature} isError={isError} />
     </div>
   );
 }
