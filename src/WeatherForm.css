@@ -1,0 +1,36 @@
+.weatherForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.weatherForm input {
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.weatherForm label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.weatherForm button {
+    background-color: #3498db;
+    color: #ffffff;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.weatherForm button:hover {
+    background-color: #2980b9;
+}
+
+.radioButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
